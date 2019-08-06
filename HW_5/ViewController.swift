@@ -24,6 +24,14 @@ class ViewController: UIViewController {
         loginTextField.delegate = self
         passwordTextField.delegate = self
         
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { (text) in
+            self.view.frame.origin.y = -150
+        }
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { (text) in
+            self.view.frame.origin.y = 0
+        }
+        
+        setupForButtons()
     }
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
@@ -54,6 +62,12 @@ class ViewController: UIViewController {
         let action = UIAlertAction(title: "ok", style: .default, handler: nil)
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
+    }
+    
+    private func setupForButtons() {
+        for button in buttonsCollection {
+            button.layer.cornerRadius = 5
+        }
     }
     
 }
