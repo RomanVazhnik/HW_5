@@ -21,11 +21,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loginTextField.delegate = self
+        passwordTextField.delegate = self
+        
     }
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
+        
         if loginTextField.text == login && passwordTextField.text == password {
-            performSegue(withIdentifier: "kek", sender: nil)
+            performSegue(withIdentifier: "nextController", sender: nil)
         } else {
             createAlertController(
                 "invalid login or password",
@@ -54,3 +58,16 @@ class ViewController: UIViewController {
     
 }
 
+extension ViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
+    
+}
