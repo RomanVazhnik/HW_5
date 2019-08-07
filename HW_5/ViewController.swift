@@ -24,14 +24,22 @@ class ViewController: UIViewController {
         loginTextField.delegate = self
         passwordTextField.delegate = self
         
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { (text) in
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
+                                               object: nil, queue: nil) { (text) in
             self.view.frame.origin.y = -150
         }
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { (text) in
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
+                                               object: nil, queue: nil) { (text) in
             self.view.frame.origin.y = 0
         }
         
         setupForButtons()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loginTextField.text = ""
+        passwordTextField.text = ""
     }
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
@@ -54,6 +62,11 @@ class ViewController: UIViewController {
         } else {
             createAlertController("Oops!", "Your password is Password")
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let secondView = segue.destination as! SecondViewController
+        secondView.texForUserName = login
     }
     
     //MARK: - create alertController
