@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         passwordTextField.text = ""
     }
     
-    @IBAction func loginButtonPressed(_ sender: UIButton) {
+    @IBAction func loginButtonPressed() {
         
         if loginTextField.text == login && passwordTextField.text == password {
             performSegue(withIdentifier: "nextController", sender: nil)
@@ -88,7 +88,11 @@ class ViewController: UIViewController {
 extension ViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        if textField == loginTextField {
+           passwordTextField.becomeFirstResponder()
+        } else {
+            loginButtonPressed()
+        }
         return true
     }
     
